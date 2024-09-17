@@ -1,0 +1,98 @@
+const indianDishes = [
+  {
+    name: "Butter Chicken",
+    category: "Non-Vegetarian",
+    type: "Main Course",
+    spiceLevel: "Medium",
+    preparationTime: 45,
+    ingredients: ["Chicken", "Butter", "Tomato", "Cream", "Spices"],
+    chefNote: "A rich and creamy dish best served with naan or rice.",
+  },
+  {
+    name: "Paneer Butter Masala",
+    category: "Vegetarian",
+    type: "Main Course",
+    spiceLevel: "Medium",
+    preparationTime: 30,
+    ingredients: ["Paneer", "Butter", "Tomato", "Cream", "Spices"],
+    chefNote: "A popular vegetarian dish with a buttery, tomato-based sauce.",
+  },
+  {
+    name: "Masala Dosa",
+    category: "Vegetarian",
+    type: "Breakfast",
+    spiceLevel: "Low",
+    preparationTime: 20,
+    ingredients: ["Rice", "Urad Dal", "Potato", "Onion", "Spices"],
+    chefNote: "A crispy dosa filled with a spicy potato mixture.",
+  },
+  {
+    name: "Biryani",
+    category: "Non-Vegetarian",
+    type: "Main Course",
+    spiceLevel: "High",
+    preparationTime: 60,
+    ingredients: ["Rice", "Chicken", "Yogurt", "Spices", "Fried Onions"],
+    chefNote:
+      "A flavorful rice dish that can also be made with mutton or vegetables.",
+  },
+  {
+    name: "Palak Paneer",
+    category: "Vegetarian",
+    type: "Main Course",
+    spiceLevel: "Medium",
+    preparationTime: 35,
+    ingredients: ["Paneer", "Spinach", "Onion", "Tomato", "Spices"],
+    chefNote:
+      "A nutritious dish with soft paneer cubes in a spiced spinach sauce.",
+  },
+  {
+    name: "Rogan Josh",
+    category: "Non-Vegetarian",
+    type: "Main Course",
+    spiceLevel: "Medium",
+    preparationTime: 50,
+    ingredients: ["Mutton", "Yogurt", "Tomato", "Spices"],
+    chefNote:
+      "A signature Kashmiri dish with tender mutton pieces in a spiced gravy.",
+  },
+  {
+    name: "Chole Bhature",
+    category: "Vegetarian",
+    type: "Breakfast",
+    spiceLevel: "Medium",
+    preparationTime: 30,
+    ingredients: ["Chickpeas", "Tomato", "Onion", "Spices", "Flour"],
+    chefNote: "A hearty dish of spicy chickpeas served with fried bread.",
+  },
+  {
+    name: "Gulab Jamun",
+    category: "Dessert",
+    type: "Dessert",
+    spiceLevel: "Low",
+    preparationTime: 25,
+    ingredients: ["Milk Solids", "Flour", "Sugar", "Cardamom"],
+    chefNote: "Sweet, soft, and syrupy balls of deliciousness, served warm.",
+  },
+  {
+    name: "Tandoori Chicken",
+    category: "Non-Vegetarian",
+    type: "Starter",
+    spiceLevel: "High",
+    preparationTime: 40,
+    ingredients: ["Chicken", "Yogurt", "Lemon Juice", "Spices"],
+    chefNote: "Marinated in yogurt and spices, then grilled to perfection.",
+  },
+  {
+    name: "Samosa",
+    category: "Vegetarian",
+    type: "Snack",
+    spiceLevel: "Medium",
+    preparationTime: 30,
+    ingredients: ["Potato", "Peas", "Spices", "Flour"],
+    chefNote:
+      "A crispy pastry filled with spiced potato and peas, perfect with chutney.",
+  },
+];
+
+export { indianDishes };
