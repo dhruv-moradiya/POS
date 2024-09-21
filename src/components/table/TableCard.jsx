@@ -1,8 +1,20 @@
 import { Check } from "lucide-react";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function TableCard({ table, setOpenTableInfo, setCurrentCustomerInfo }) {
   const borderColor = table.isOccupied ? "border-red-500" : "border-green-500";
+
+  const {
+    order: { orders, isOrderLoading, isErrorInOrder },
+    table: { tables, isTableLoading, isErrorInTable },
+  } = useSelector((state) => state);
+
+  const isOrderOnTable = orders.find(
+    (order) =>
+      (order?.table_info && order.table_info._id === table._id) ||
+      order.tableId === table._id
+  );
 
   function tableInfo() {
     setOpenTableInfo({
@@ -34,14 +46,9 @@ function TableCard({ table, setOpenTableInfo, setCurrentCustomerInfo }) {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="w-[70%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-culture-white px-2 rounded shadow flex items-center gap-2">
+      <div className="w-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-culture-white px-2 rounded shadow flex items-center gap-2">
         <span>{table?.currentCustomer?.name}</span>
-
-        <span>
-          {table?.currentCustomer?.name && table?.currentOrderInfo && (
-            <Check size={14} />
-          )}
-        </span>
+        <span>{isOrderOnTable && <Check size={14} />}</span>
       </div>
     </div>
   );

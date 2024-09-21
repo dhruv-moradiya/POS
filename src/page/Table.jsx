@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTables } from "../store/tableSlice/TableThunk";
 import SelectTableAndPlaceOrder from "../components/table/SelectTableAndPlaceOrder";
 import { getDishes } from "../store/dishSlice/DishThunk";
+import { getOrders } from "../store/orderSlice/OrderThunk";
 
 const tabs = ["All Table", "Vacant", "Occupied", "Disable"];
 const description = [
@@ -38,6 +39,7 @@ function Table() {
   useEffect(() => {
     dispatch(getTables());
     dispatch(getDishes());
+    dispatch(getOrders());
   }, []);
 
   return (

@@ -5,9 +5,13 @@ import Input from "../../components/common/Input";
 import axios from "axios";
 import { notify } from "../../utility/notify";
 import { LoaderIcon } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store/currentUserSlice/CurrentUserSlice";
 
 function SignIn() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -37,10 +41,19 @@ function SignIn() {
         .then((response) => {
           if (response.status === 200) {
             notify("success", response.data.message);
+
+            const { user, accessToken } = response.data;
+
             localStorage.setItem(
-              "token",
-              JSON.stringify(response.data.accessToken)
+              "user_info",
+              JSON.stringify({
+                userId: user._id,
+                accessToken,
+                isAdmin: user.email === import.meta.env.VITE_APP_ADMIN_EMAIL_ID,
+              })
             );
+
+            dispatch(setCurrentUser({ ...user, accessToken }));
           } else {
             notify("error", response.message);
           }

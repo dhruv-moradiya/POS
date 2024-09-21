@@ -9,7 +9,10 @@ import { createColumnHelper } from "@tanstack/react-table";
 import CommonTable from "../common/CommonTable";
 import toast from "react-hot-toast";
 import useSubmitOnClick from "../../hooks/useSubmitOnClick";
-import { updateOrderedDishQuantityOrDiscount } from "../../store/orderSlice/OrderSlice";
+import {
+  updateOrderedDishQuantityOrDiscount,
+  updateOrderList,
+} from "../../store/orderSlice/OrderSlice";
 
 function OccupiedTableInfo({
   tables,
@@ -180,6 +183,8 @@ function PlaceOrderUi({
   const [isLoading, setIsLoading] = useState(false);
   const columnHelper = createColumnHelper();
 
+  const dispatch = useDispatch();
+
   console.log("currentCustomerInfo :>> ", currentCustomerInfo);
 
   async function placeOrder() {
@@ -213,6 +218,7 @@ function PlaceOrderUi({
           isOpen: false,
           table_id: "",
         });
+        dispatch(updateOrderList(response.data.order));
       } else {
         toast.error(response.data.message);
       }

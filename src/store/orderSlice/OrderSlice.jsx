@@ -34,7 +34,8 @@ const orderSlice = createSlice({
     },
 
     updateOrderList: (state, action) => {
-      state.orders = action.payload;
+      console.log("New order added in order list :>> ", action.payload);
+      state.orders = [...state.orders, action.payload];
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +53,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const { updateOrderedDishQuantityOrDiscount } = orderSlice.actions;
+export const { updateOrderedDishQuantityOrDiscount, updateOrderList } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;

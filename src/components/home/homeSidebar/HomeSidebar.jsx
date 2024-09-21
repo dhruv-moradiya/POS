@@ -78,9 +78,7 @@ function HomeSidebar({ dishes, customers, isCustomerLoading }) {
               borderLeftColor: "#09AA20",
               height: selectedCustomer === order.id ? "auto" : "40px",
               backgroundColor:
-                selectedCustomer === order.id
-                  ? "rgba(252, 128, 25, 0.1)"
-                  : index % 2 === 0
+                index % 2 === 0
                   ? "rgba(245, 245, 245, 1)"
                   : "rgba(230, 230, 230, 0.8)",
             }}

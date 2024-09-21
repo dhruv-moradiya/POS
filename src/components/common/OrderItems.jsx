@@ -52,7 +52,7 @@ const OrderItems = ({ orderId, items, selectedOrder, setSelectedOrder }) => {
       {items.map((item) => (
         <motion.li
           key={item.id}
-          className="pl-6 px-3 py-2 w-full bg-culture-white flex flex-col items-center justify-between gap-2 rounded-md cursor-pointer relative"
+          className="pl-6 px-3 py-2 w-full bg-linen/80 shadow-sm flex flex-col items-center justify-between gap-2 rounded-md cursor-pointer relative"
           onClick={(e) => selectOrder(e, item)}
           initial={{ borderLeftWidth: 0 }}
           animate={{
