@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
-const TOKEN = JSON.parse(localStorage.getItem("user_info")).accessToken;
+const TOKEN = JSON.parse(localStorage.getItem("user_info"))?.accessToken || "";
 
 export const getTables = createAsyncThunk("tables/gettables", async () => {
   try {

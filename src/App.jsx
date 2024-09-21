@@ -18,6 +18,14 @@ import store from "./store/store";
 import { setCurrentUser } from "./store/currentUserSlice/CurrentUserSlice";
 import { Navigate } from "react-router-dom";
 
+function ProtectedRoute({ children }) {
+  const user_info = JSON.parse(localStorage.getItem("user_info"));
+  if (!user_info) {
+    return <Navigate to={"/signin"} />;
+  }
+  return children;
+}
+
 function IsAdmin({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +57,13 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
             <Route path="/" element={<Home />} />
             <Route
               path="/customer"
