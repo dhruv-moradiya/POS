@@ -8,10 +8,11 @@ import { Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDishes } from "../store/dishSlice/DishThunk";
 import { getAllCustomers } from "../store/customerSlice/CustomerThunk";
-import { getOrders } from "../store/orderSlice/OrderThunk";
+import { getOrders, getTodaysOrders } from "../store/orderSlice/OrderThunk";
 import { AnimatePresence } from "framer-motion";
 import AddNewCustomer from "../components/common/AddNewCustomer";
 import { getTables } from "../store/tableSlice/TableThunk";
+import PaymentInfo from "../components/home/PaymentInfo";
 
 function Home() {
   const [currentTab, setCurrentTab] = useState("All");
@@ -25,7 +26,7 @@ function Home() {
   useEffect(() => {
     dispatch(getDishes());
     dispatch(getAllCustomers());
-    dispatch(getOrders());
+    dispatch(getTodaysOrders());
     dispatch(getTables());
   }, []);
 
@@ -48,6 +49,8 @@ function Home() {
       );
     }
   }, [currentTab, dishes]);
+
+  // if (orders.length) return null;
 
   return (
     <div className="w-full rounded-lg flex gap-2">
@@ -97,6 +100,7 @@ function Home() {
           dish={dishes.find((dish) => dish._id === showDishDetails)}
         />
       )}
+      {/* <PaymentInfo /> */}
     </div>
   );
 }

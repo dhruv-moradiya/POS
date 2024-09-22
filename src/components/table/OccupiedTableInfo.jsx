@@ -40,14 +40,12 @@ function OccupiedTableInfo({
     ? currentCustomerInfo.status === "PENDING" || "HOLD"
     : false;
 
-  console.log("currentCustomerInfo :>> ", currentCustomerInfo);
-  console.log("orders :>> ", orders);
-
   const updateDish = async (dishId, data) => {
     try {
       console.log("data :>> ", data);
       const result = await postData(
         `order/update_item/${orderId}`,
+
         { dishId, ...data },
         "patch"
       );
@@ -185,8 +183,6 @@ function PlaceOrderUi({
 
   const dispatch = useDispatch();
 
-  console.log("currentCustomerInfo :>> ", currentCustomerInfo);
-
   async function placeOrder() {
     setIsLoading(true);
     try {
@@ -198,15 +194,16 @@ function PlaceOrderUi({
             dish: dish._id,
             qty: dish.qty,
           })),
-          customer_id: currentCustomerInfo._id,
+          customer_id: currentCustomerInfo.customerId,
           tableId,
-          status: "PENDING",
           orderType: "DINE-IN",
           paymentStatus: "UNPAID",
           totalAmount: orderedDishes.reduce((a, b) => a + b.price * b.qty, 0),
         },
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("user_info")).accessToken || ""
+          }`,
         },
       });
 

@@ -7,7 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { updateOrderedDishQuantityOrDiscount } from "../../store/orderSlice/OrderSlice";
 
-const OrderItems = ({ orderId, items, selectedOrder, setSelectedOrder }) => {
+const OrderItems = ({
+  orderId,
+  items,
+  selectedOrderedDish,
+  setSelectedOrderedDish,
+}) => {
   const { response, error, loading, postData } = useSubmitOnClick();
   const dispatch = useDispatch();
 
@@ -19,7 +24,9 @@ const OrderItems = ({ orderId, items, selectedOrder, setSelectedOrder }) => {
 
   function selectOrder(e, item) {
     e.stopPropagation();
-    setSelectedOrder(selectedOrder === item.dish.id ? null : item.dish.id);
+    setSelectedOrderedDish(
+      selectedOrderedDish === item.dish.id ? null : item.dish.id
+    );
   }
 
   const updateDish = async (dishId, data) => {
@@ -56,14 +63,14 @@ const OrderItems = ({ orderId, items, selectedOrder, setSelectedOrder }) => {
           onClick={(e) => selectOrder(e, item)}
           initial={{ borderLeftWidth: 0 }}
           animate={{
-            borderLeftWidth: selectedOrder === item.dish.id ? 4 : 0,
+            borderLeftWidth: selectedOrderedDish === item.dish.id ? 4 : 0,
             borderLeftColor: "#09AA20",
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           <div className="w-full flex items-center gap-2">
             <motion.button
-              animate={{ rotate: selectedOrder === item.id ? 90 : 0 }}
+              animate={{ rotate: selectedOrderedDish === item.id ? 90 : 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <ChevronRight size={18} />
@@ -74,7 +81,7 @@ const OrderItems = ({ orderId, items, selectedOrder, setSelectedOrder }) => {
               <CircleX size={16} />
             </p>
           </div>
-          {selectedOrder === item.dish.id && (
+          {selectedOrderedDish === item.dish.id && (
             <Model
               quantity={item.qty}
               discount={item.discount}

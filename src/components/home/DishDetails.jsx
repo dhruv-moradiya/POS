@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Edit, X } from "lucide-react";
-import { getCapitalizedWord } from "../../utility/helper";
+import { getCapitalizedWord } from "../../utility/helper.jsx";
 
 const DishDetails = ({ showDishDetails, setShowDishDetails, dish }) => {
   const [price, setPrice] = useState(dish.price);

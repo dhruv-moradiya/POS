@@ -13,8 +13,6 @@ function AddNewDishModel({
   const [quantity, setQuantity] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
 
-  console.log("dishes :>> ", dishes);
-
   function selectDishes() {
     if (selectedDish && selectedDish.isAvailable && Number(quantity) > 0) {
       setOrderedDishes((prev) => {

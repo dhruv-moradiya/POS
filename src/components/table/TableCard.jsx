@@ -4,17 +4,12 @@ import { useSelector } from "react-redux";
 
 function TableCard({ table, setOpenTableInfo, setCurrentCustomerInfo }) {
   const borderColor = table.isOccupied ? "border-red-500" : "border-green-500";
-
   const {
     order: { orders, isOrderLoading, isErrorInOrder },
     table: { tables, isTableLoading, isErrorInTable },
   } = useSelector((state) => state);
 
-  const isOrderOnTable = orders.find(
-    (order) =>
-      (order?.table_info && order.table_info._id === table._id) ||
-      order.tableId === table._id
-  );
+  const isOrderOnTable = table.isOccupied && table.currentOrderInfo;
 
   function tableInfo() {
     setOpenTableInfo({
@@ -28,8 +23,6 @@ function TableCard({ table, setOpenTableInfo, setCurrentCustomerInfo }) {
       customerId: table.currentCustomer?._id,
       orderId: table.currentOrderInfo?._id,
     });
-
-    console.log("table :>> ", table);
 
     if (!table.isOccupied) {
     }

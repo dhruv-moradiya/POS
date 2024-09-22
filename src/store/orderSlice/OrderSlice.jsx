@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getOrders } from "./OrderThunk";
+import { getOrders, getTodaysOrders } from "./OrderThunk";
 
 const orderSlice = createSlice({
   name: "order",
@@ -34,8 +34,29 @@ const orderSlice = createSlice({
     },
 
     updateOrderList: (state, action) => {
-      console.log("New order added in order list :>> ", action.payload);
+      console.log("UPDATE ORDER LIST :>> ", action.payload);
       state.orders = [...state.orders, action.payload];
+    },
+
+    cancelOrder: (state, action) => {
+      console.log("action.payload :>> ", action.payload);
+
+      state.orders = state.orders.map((order) => {
+        console.log(
+          "order._id === action.payload._id :>> ",
+          order._id === action.payload._id
+        );
+
+        if (order._id === action.payload._id) {
+          return {
+            ...order,
+            status: action.payload.status,
+            table_info: action.payload.table_info || null,
+          };
+        } else {
+          return order;
+        }
+      });
     },
   },
   extraReducers: (builder) => {
@@ -50,10 +71,25 @@ const orderSlice = createSlice({
       state.isOrderLoading = false;
       state.isErrorInOrder = action.payload;
     });
+
+    builder.addCase(getTodaysOrders.pending, (state) => {
+      state.isOrderLoading = true;
+    });
+    builder.addCase(getTodaysOrders.fulfilled, (state, action) => {
+      state.isOrderLoading = false;
+      state.orders = action.payload.orders;
+    });
+    builder.addCase(getTodaysOrders.rejected, (state, action) => {
+      state.isOrderLoading = false;
+      state.isErrorInOrder = action.payload;
+    });
   },
 });
 
-export const { updateOrderedDishQuantityOrDiscount, updateOrderList } =
-  orderSlice.actions;
+export const {
+  updateOrderedDishQuantityOrDiscount,
+  updateOrderList,
+  cancelOrder,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -32,8 +32,6 @@ function IsAdmin({ children }) {
 
   const user_info = JSON.parse(localStorage.getItem("user_info"));
 
-  console.log("user_info :>> ", user_info);
-
   if (!user_info) {
     return <Navigate to={"/signin"} />;
   }
@@ -52,7 +50,6 @@ function IsAdmin({ children }) {
 function App() {
   const { currentUser } = useSelector((state) => state);
 
-  console.log("currentUser :>> ", currentUser);
   return (
     <>
       <BrowserRouter>
