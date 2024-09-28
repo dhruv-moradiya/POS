@@ -39,11 +39,7 @@ function HomeSidebar({ dishes, customers, isCustomerLoading }) {
   const selectedCustomerPaymentInfo =
     selectedCustomer && orders.find((order) => order._id === selectedCustomer);
 
-  console.log("orders :>> ", orders);
-
   async function cancelOrder(id) {
-    console.log("id :>> ", id);
-
     try {
       const cancelRequest = axios({
         method: "patch",

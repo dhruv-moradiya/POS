@@ -8,11 +8,8 @@ import { Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDishes } from "../store/dishSlice/DishThunk";
 import { getAllCustomers } from "../store/customerSlice/CustomerThunk";
-import { getOrders, getTodaysOrders } from "../store/orderSlice/OrderThunk";
-import { AnimatePresence } from "framer-motion";
-import AddNewCustomer from "../components/common/AddNewCustomer";
+import { getOrders } from "../store/orderSlice/OrderThunk";
 import { getTables } from "../store/tableSlice/TableThunk";
-import PaymentInfo from "../components/home/PaymentInfo";
 
 function Home() {
   const [currentTab, setCurrentTab] = useState("All");
@@ -26,7 +23,7 @@ function Home() {
   useEffect(() => {
     dispatch(getDishes());
     dispatch(getAllCustomers());
-    dispatch(getTodaysOrders());
+    dispatch(getOrders());
     dispatch(getTables());
   }, []);
 
