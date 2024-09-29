@@ -12,7 +12,12 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 
-function CommonTable({ data, columns, pagination }) {
+function CommonTable({
+  data,
+  columns,
+  pagination,
+  expandRowContent: ExpandRowContent,
+}) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
 
@@ -35,7 +40,7 @@ function CommonTable({ data, columns, pagination }) {
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  key={`${headerGroup.id}_${header.id}`} // Combine headerGroup and header id
+                  key={`${headerGroup.id}_${header.id}`}
                   onClick={header.column.getToggleSortingHandler()}
                   style={{ cursor: "pointer" }}
                 >
@@ -58,19 +63,25 @@ function CommonTable({ data, columns, pagination }) {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row, index) => (
-            <tr key={row.id} className="mb-2">
-              {row.getVisibleCells().map((cell) => (
-                <td key={`${row.id}_${cell.column.id}`}>
-                  <div
-                    className={`p-2 ${
-                      index % 2 === 0 ? "bg-white" : "bg-culture-white"
-                    } rounded-md`}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </div>
-                </td>
-              ))}
-            </tr>
+            <React.Fragment key={row.id}>
+              <tr className="mb-2">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={`${row.id}_${cell.column.id}`}>
+                    <div
+                      className={`p-2 ${
+                        index % 2 === 0 ? "bg-white" : "bg-culture-white"
+                      } rounded-md`}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </div>
+                  </td>
+                ))}
+              </tr>
+              {row.getIsExpanded() && <ExpandRowContent row={row} />}
+            </React.Fragment>
           ))}
         </tbody>
       </table>

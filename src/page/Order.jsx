@@ -57,6 +57,7 @@ function Order() {
   }
 
   const orderArray = generateOrders(10);
+  console.log("orderArray :>> ", orderArray);
   console.log(orderArray);
 
   const tabs = [
