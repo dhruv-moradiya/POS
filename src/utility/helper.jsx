@@ -39,3 +39,7 @@ export function getStatusIcon(status) {
       return null;
   }
 }
+
+function testFun() {
+  console.log("object");
+}
