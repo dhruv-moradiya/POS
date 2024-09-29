@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { motion } from "framer-motion";
 
 const Input = forwardRef(
-  ({ className, placeholder, type, id, ...rest }, ref) => {
+  ({ className, placeholder, type = "text", id, ...rest }, ref) => {
     return (
       <motion.input
         ref={ref}

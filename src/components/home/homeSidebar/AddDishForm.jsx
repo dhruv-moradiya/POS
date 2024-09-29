@@ -2,24 +2,14 @@ import { motion } from "framer-motion";
 import { Link, LoaderIcon, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Input from "../../common/Input";
-import axios from "axios";
-import { notify } from "../../../utility/notify";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateDishes } from "../../../store/dishSlice/DishSlice";
-
-const TOKEN = JSON.parse(localStorage.getItem("token"));
+import useAddNewDish from "../../../hooks/useAddNewDish";
 
 const AddDishForm = ({ setOpenAddDishForm }) => {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm({
     defaultValues: {
       status: "available",
@@ -29,57 +19,7 @@ const AddDishForm = ({ setOpenAddDishForm }) => {
     },
   });
 
-  const closeAddDishForm = () => {
-    setOpenAddDishForm(false);
-  };
-
-  const onSubmit = (data) => {
-    console.log("🚀 ~ handleSubmitForm ~ data:", data);
-    setIsFormSubmitted(true);
-
-    const formData = new FormData();
-
-    formData.append("name", data.dishName);
-    formData.append("category", data.category);
-    formData.append("type", data.type);
-    formData.append("spice_level", data.spice_level);
-    formData.append("status", data.status);
-    formData.append("ingredients", data.ingredients.split(","));
-    formData.append("chefs_note", data.chef_note);
-    formData.append("preparation_time", data.preparation_time);
-    formData.append("price", data.price);
-
-    if (data.dishImage && data.dishImage[0]) {
-      formData.append("dishImage", data.dishImage[0]);
-    }
-
-    axios({
-      method: "post",
-      url: `${import.meta.env.VITE_APP_SERVER_URL}/dish`,
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-      },
-      data: formData,
-    })
-      .then((response) => {
-        console.log("🚀 ~ onSubmit ~ response:", response);
-
-        if (response.status === 201) {
-          notify("success", "Dish created successfully");
-          dispatch(updateDishes(response.data.dish));
-        } else {
-          notify("error", response.message);
-        }
-      })
-      .catch((error) => {
-        console.error("🚀 ~ onSubmit ~ error:", error);
-        notify("error", error?.response?.data?.message);
-      })
-      .finally(() => {
-        setIsFormSubmitted(false);
-        reset();
-      });
-  };
+  const { onSubmit, isFormSubmitted } = useAddNewDish({ reset });
 
   return (
     <motion.div
@@ -287,7 +227,7 @@ const AddDishForm = ({ setOpenAddDishForm }) => {
       </form>
       <button
         className="p-2 bg-culture-white rounded-full shadow absolute top-1 right-1"
-        onClick={closeAddDishForm}
+        onClick={() => setOpenAddDishForm(false)}
       >
         <X size={18} />
       </button>

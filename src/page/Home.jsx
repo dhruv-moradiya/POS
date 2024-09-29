@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Plus } from "lucide-react";
+import { getDishes } from "../store/dishSlice/DishThunk";
+import { getAllCustomers } from "../store/customerSlice/CustomerThunk";
+import { getOrders } from "../store/orderSlice/OrderThunk";
+import { getTables } from "../store/tableSlice/TableThunk";
 import Card from "../components/common/Card";
-import Tabs from "../components/home/Tabs";
 import HomeSidebar from "../components/home/homeSidebar/HomeSidebar";
 import DishDetails from "../components/home/DishDetails";
 import AddDishForm from "../components/home/homeSidebar/AddDishForm";
-import {
-  getDishes,
-  getAllCustomers,
-  getOrders,
-  getTables,
-} from "../store/store";
+import Tabs from "../components/common/Tabs";
 
 function Home() {
   const [currentTab, setCurrentTab] = useState("All");
@@ -96,9 +94,19 @@ export default Home;
 
 // Header section with tabs and button
 function HeaderSection({ currentTab, setCurrentTab, setIsAddDishFormOpen }) {
+  const tabs = [
+    "All",
+    "Starter",
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Dessert",
+    "Beverages",
+  ];
+
   return (
     <div className="flex items-center justify-between py-1 bg-linen shadow-sm">
-      <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <Tabs tabs={tabs} currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <button
         className="bg-amber-sea text-white text-xs font-semibold px-4 rounded-md flex items-center gap-2 py-2"
         onClick={() => setIsAddDishFormOpen(true)}
