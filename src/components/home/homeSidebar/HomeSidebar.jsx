@@ -17,6 +17,8 @@ import useSubmitOnClick from "../../../hooks/useSubmitOnClick";
 import { cancelOrder as cancelOrderAction } from "../../../store/orderSlice/OrderSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function HomeSidebar({ dishes, customers, isCustomerLoading }) {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -68,8 +70,38 @@ function HomeSidebar({ dishes, customers, isCustomerLoading }) {
     }
   }
 
+  const generatePDF = () => {
+    const input = document.getElementById("pdf-content");
+
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 190;
+      const pageHeight = pdf.internal.pageSize.height;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save("generated.pdf");
+    });
+  };
+
   return (
-    <div className="w-[480px] bg-linen rounded-md shadow-sm p-2 flex flex-col justify-between relative">
+    <div
+      className="w-[480px] bg-linen rounded-md shadow-sm p-2 flex flex-col justify-between relative"
+      id="pdf-content"
+    >
       <div className="w-full flex items-center justify-between">
         <motion.button
           className="flex items-center gap-2 px-2 py-2 bg-culture-white rounded-lg shadow hover:shadow-md mb-3 font-semibold text-xs"
@@ -103,6 +135,7 @@ function HomeSidebar({ dishes, customers, isCustomerLoading }) {
             scale: 0.95,
             backgroundColor: "rgba(230, 230, 230, 0.8)",
           }}
+          onClick={generatePDF}
         >
           <Filter size={18} />
         </motion.button>
